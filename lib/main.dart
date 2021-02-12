@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:geolocation_app/Pages/homepage.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.teal,
+        buttonColor: Colors.tealAccent,
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomePage(),
+      },
+    ),
+  );
 }
 
+/* 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -115,3 +129,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+ */
