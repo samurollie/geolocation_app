@@ -9,7 +9,7 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
-  StreamSubscription<Position> posicao_atual;
+  StreamSubscription<Position> listener;
   Position position;
 
   @override
@@ -42,7 +42,7 @@ class _LocationPageState extends State<LocationPage> {
   }
 
   void getPositions() async {
-    this.posicao_atual = Geolocator.getPositionStream(
+    this.listener = Geolocator.getPositionStream(
       intervalDuration: Duration(seconds: 3),
     ).listen((Position position) {
       print(
@@ -52,9 +52,7 @@ class _LocationPageState extends State<LocationPage> {
                 ', ' +
                 position.longitude.toString(),
       );
-      setState(() {
-        this.position = position;
-      });
+      this.position = position;
     });
   }
 
@@ -96,19 +94,20 @@ class _LocationPageState extends State<LocationPage> {
           children: [
             RaisedButton(
               child: Text("PARAR"),
-              onPressed: () async {
-                this.posicao_atual.cancel();
+              onPressed: () {
+                this.listener.cancel();
+                print(position);
                 print("PAROU!!!");
                 Navigator.of(context).pop();
               },
             ),
-            Text(
+            /* Text(
               "Ultimas 10 coordenadas:",
               style: Theme.of(context).textTheme.bodyText1,
-            ),
-            Flexible(
+            ), */
+            /* Flexible(
               child: mostrarPosicoes(),
-            ),
+            ), */
           ],
         ),
       ),
