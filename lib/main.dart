@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:geolocation_app/Pages/homepage.dart';
+import 'package:geolocation_app/Pages/homePage.dart';
+import 'package:geolocation_app/Pages/locationPage.dart';
 
 void main() {
   runApp(
@@ -8,10 +9,15 @@ void main() {
       theme: ThemeData(
         primarySwatch: Colors.teal,
         buttonColor: Colors.tealAccent,
+        textTheme: TextTheme(
+          bodyText1: TextStyle(fontSize: 30),
+          bodyText2: TextStyle(fontSize: 20),
+        ),
       ),
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
+        '/location': (context) => LocationPage(),
       },
     ),
   );
