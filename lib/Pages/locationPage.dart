@@ -10,7 +10,10 @@ class LocationPage extends StatefulWidget {
 
 class _LocationPageState extends State<LocationPage> {
   StreamSubscription<Position> listener;
-  Position position;
+  // Future<List<Position>> futuraLista;
+  var listPosition = new List<Position>(10);
+  int i = 0;
+  // Position position;
 
   @override
   void initState() {
@@ -41,7 +44,7 @@ class _LocationPageState extends State<LocationPage> {
     }
   }
 
-  void getPositions() async {
+  void getPositions() {
     this.listener = Geolocator.getPositionStream(
       intervalDuration: Duration(seconds: 3),
     ).listen((Position position) {
@@ -52,27 +55,45 @@ class _LocationPageState extends State<LocationPage> {
                 ', ' +
                 position.longitude.toString(),
       );
-      this.position = position;
+      this.listPosition[i % 10] = position;
+      setState(() {
+        i++;
+      });
     });
+
+    /* this.futuraLista =
+        Geolocator.getPositionStream(intervalDuration: Duration(seconds: 3))
+            .toList()
+            .then((value) => this.verdadeiraLista = value);
+    print(futuraLista);
+    for (int i = 0; i < 10; i++) {
+      print(verdadeiraLista);
+    } */
   }
 
   Widget mostrarPosicoes() {
     return ListView.builder(
       itemCount: 10,
       itemBuilder: (context, index) {
-        return Card(
-          child: ListTile(
-            title: Text(
-              this.position.latitude.toString() +
-                  ', ' +
-                  this.position.longitude.toString(),
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ),
+        return ListTile(
+          title: Text((this.listPosition[index] == null)
+              ? "Unknown"
+              : this.listPosition[index].toString()),
         );
       },
+    );
+  }
+
+  Widget posicoes(Position position) {
+    return Card(
+      child: ListTile(
+        title: Text(
+          position.latitude.toString() + ', ' + position.longitude.toString(),
+          style: TextStyle(
+            fontSize: 20,
+          ),
+        ),
+      ),
     );
   }
 
@@ -96,18 +117,18 @@ class _LocationPageState extends State<LocationPage> {
               child: Text("PARAR"),
               onPressed: () {
                 this.listener.cancel();
-                print(position);
+                print(this.listPosition);
                 print("PAROU!!!");
                 Navigator.of(context).pop();
               },
             ),
-            /* Text(
-              "Ultimas 10 coordenadas:",
+            Text(
+              "Últimas 10 coordenadas:",
               style: Theme.of(context).textTheme.bodyText1,
-            ), */
-            /* Flexible(
+            ),
+            Flexible(
               child: mostrarPosicoes(),
-            ), */
+            ),
           ],
         ),
       ),

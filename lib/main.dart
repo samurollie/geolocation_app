@@ -10,8 +10,7 @@ void main() {
         primarySwatch: Colors.teal,
         buttonColor: Colors.tealAccent,
         textTheme: TextTheme(
-          bodyText1: TextStyle(fontSize: 30),
-          bodyText2: TextStyle(fontSize: 20),
+          bodyText1: TextStyle(fontSize: 20),
         ),
       ),
       initialRoute: '/',
