@@ -103,6 +103,7 @@ class _LocationPageState extends State<LocationPage> {
       appBar: AppBar(
         title: Icon(
           Icons.map_outlined,
+          semanticLabel: "Geo Locator",
         ),
         centerTitle: true,
       ),
